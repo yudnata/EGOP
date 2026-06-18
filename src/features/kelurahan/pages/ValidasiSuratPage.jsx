@@ -4,6 +4,7 @@ import {
   FLOW_STEP_LABELS,
   getServiceIcon,
 } from "../../../data/serviceData.jsx";
+import DocumentPreviewModal from "../../../components/DocumentPreviewModal";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Data ini mewakili surat yang SUDAH diverifikasi Kaling dan diteruskan ke
@@ -115,6 +116,8 @@ const DetailModal = ({ item, service, onClose, onApprove, onReject }) => {
   const [isSigned, setIsSigned] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [showSigError, setShowSigError] = useState(false);
+  const [previewDoc, setPreviewDoc] = useState(null);
+  const [previewIsSuratPengantar, setPreviewIsSuratPengantar] = useState(false);
 
   const approveLabel = service.forwardTo
     ? `Validasi & Teruskan ke ${service.forwardTo}`
@@ -328,44 +331,114 @@ const DetailModal = ({ item, service, onClose, onApprove, onReject }) => {
                 />
               </svg>
               Dokumen Terlampir
+              <span className="ml-auto text-[9px] font-semibold text-blue-500 normal-case tracking-normal">
+                Klik dokumen untuk preview
+              </span>
             </h4>
-            <div className="grid grid-cols-2 gap-2">
-              {(item.docs || []).map((doc) => (
-                <div
-                  key={doc}
-                  className={`border rounded-lg px-3 py-2.5 flex items-center gap-2 ${
-                    doc.includes("SuratPengantar")
-                      ? "border-green-300 bg-transparent"
-                      : "border-gray-200"
-                  }`}
-                >
-                  <svg
-                    className={`w-4 h-4 flex-shrink-0 ${doc.includes("SuratPengantar") ? "text-green-500" : "text-blue-500"}`}
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
+            <div className="space-y-2">
+              {(item.docs || []).map((doc) => {
+                const isSuratPengantar = doc.includes("SuratPengantar");
+                const isImg =
+                  doc.toLowerCase().endsWith(".jpg") ||
+                  doc.toLowerCase().endsWith(".jpeg") ||
+                  doc.toLowerCase().endsWith(".png");
+
+                const handleOpenPreview = () => {
+                  setPreviewDoc(doc);
+                  setPreviewIsSuratPengantar(isSuratPengantar);
+                };
+
+                return (
+                  <div
+                    key={doc}
+                    onClick={handleOpenPreview}
+                    className={`border rounded-xl px-3 py-2.5 flex items-center gap-3 transition-all group cursor-pointer ${
+                      isSuratPengantar
+                        ? "border-green-300 hover:border-green-400 hover:bg-green-50/30"
+                        : "border-gray-200 hover:border-blue-300 hover:bg-blue-50/30"
+                    }`}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
-                    />
-                  </svg>
-                  <div className="flex-1 min-w-0">
-                    <span className="text-xs font-medium text-gray-700 truncate block">
-                      {doc}
-                    </span>
-                    {doc.includes("SuratPengantar") && (
-                      <span className="text-[9px] text-green-600 font-bold">
-                        Surat Pengantar Kaling
+                    {/* File type badge */}
+                    <div
+                      className={`w-8 h-8 rounded-lg flex items-center justify-center text-[9px] font-bold text-white flex-shrink-0 ${
+                        isSuratPengantar
+                          ? "bg-amber-500"
+                          : isImg
+                            ? "bg-violet-500"
+                            : "bg-red-500"
+                      }`}
+                    >
+                      {isSuratPengantar ? "SP" : isImg ? "IMG" : "PDF"}
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <span className="text-xs font-medium text-gray-700 truncate block">
+                        {doc}
                       </span>
-                    )}
+                      {isSuratPengantar && (
+                        <span className="text-[9px] text-green-600 font-bold">
+                          ✓ Surat Pengantar Kaling — Klik untuk preview
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Action buttons */}
+                    <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOpenPreview();
+                        }}
+                        className={`flex items-center gap-1 px-2 py-1 rounded-lg text-[9px] font-bold transition-colors ${
+                          isSuratPengantar
+                            ? "bg-green-100 hover:bg-green-200 text-green-700"
+                            : "bg-blue-100 hover:bg-blue-200 text-blue-700"
+                        }`}
+                      >
+                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        Preview
+                      </button>
+                      <button
+                        onClick={(e) => e.stopPropagation()}
+                        className="flex items-center gap-1 px-2 py-1 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 text-[9px] font-bold transition-colors"
+                      >
+                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                        </svg>
+                        Unduh
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
+
+          {/* Document Preview Modal */}
+          {previewDoc && (
+            <DocumentPreviewModal
+              doc={previewDoc}
+              isSuratPengantar={previewIsSuratPengantar}
+              suratData={{
+                nama: item.name,
+                nik: item.nik,
+                ttl: item.ttl,
+                jenisKelamin: item.jenisKelamin,
+                agama: item.agama,
+                pekerjaan: item.pekerjaan,
+                alamat: item.alamat,
+                keperluan: item.keperluan,
+                namaKaling: item.kalingName,
+              }}
+              onClose={() => {
+                setPreviewDoc(null);
+                setPreviewIsSuratPengantar(false);
+              }}
+            />
+          )}
 
           {/* Alur Pemrosesan */}
           <div className="border border-gray-200 rounded-xl p-5">
