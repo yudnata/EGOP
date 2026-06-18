@@ -257,6 +257,13 @@ const DashboardShell = ({ role, pendingList, setPendingList }) => {
             <p className="text-sm text-gray-600">
               Halaman ini sekarang memakai route nyata di bawah <code>/dashboard</code>.
             </p>
+            <button
+              type="button"
+              onClick={() => navigate("/dashboard/login", { replace: true })}
+              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs transition-colors"
+            >
+              Logout
+            </button>
           </div>
         </div>
       );
@@ -294,6 +301,15 @@ const DashboardShell = ({ role, pendingList, setPendingList }) => {
           <p className="text-sm text-gray-600">
             Route halaman ini juga mengikuti prefix <code>/dashboard</code>.
           </p>
+          <div className="mt-6">
+            <button
+              type="button"
+              onClick={() => navigate("/dashboard/login", { replace: true })}
+              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs transition-colors"
+            >
+              Logout
+            </button>
+          </div>
         </div>
       );
     }
@@ -322,6 +338,15 @@ const DashboardShell = ({ role, pendingList, setPendingList }) => {
           <p className="text-sm text-gray-600">
             Route ini juga berada di bawah <code>/dashboard</code>.
           </p>
+          <div className="mt-6">
+            <button
+              type="button"
+              onClick={() => navigate("/dashboard/login", { replace: true })}
+              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs transition-colors"
+            >
+              Logout
+            </button>
+          </div>
         </div>
       );
     }
@@ -350,6 +375,15 @@ const DashboardShell = ({ role, pendingList, setPendingList }) => {
           <p className="text-sm text-gray-600">
             Semua halaman admin sekarang konsisten di route <code>/dashboard</code>.
           </p>
+          <div className="mt-6">
+            <button
+              type="button"
+              onClick={() => navigate("/dashboard/login", { replace: true })}
+              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs transition-colors"
+            >
+              Logout
+            </button>
+          </div>
         </div>
       );
     }
