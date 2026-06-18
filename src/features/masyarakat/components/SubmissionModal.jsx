@@ -95,13 +95,13 @@ const StepPersyaratan = ({ service, user, onNext, onCancel }) => {
       </div>
 
       {/* Alur pengajuan - visual timeline */}
-      <div className="bg-blue-50 border border-blue-100 rounded-lg px-4 py-3">
+      <div className="bg-transparent border border-blue-200 rounded-lg px-4 py-3">
         <p className="text-xs font-bold text-blue-600 uppercase tracking-widest mb-2">Alur Pengajuan</p>
         <div className="flex items-center flex-wrap gap-1">
           {(service.flowSteps ?? ['masyarakat', 'kaling', 'kelurahan']).map((step, i, arr) => (
             <Fragment key={step}>
-              <span className="inline-flex items-center gap-1 px-2 py-1 bg-white/80 border border-blue-200 rounded text-[10px] font-bold text-blue-700">
-                <span className="w-4 h-4 bg-blue-100 rounded-full flex items-center justify-center text-[8px] font-extrabold text-blue-600">{i + 1}</span>
+              <span className="inline-flex items-center gap-1 px-2 py-1 bg-transparent border border-blue-300 rounded text-[10px] font-bold text-blue-700">
+                <span className="w-4 h-4 border border-blue-300 rounded-full flex items-center justify-center text-[8px] font-extrabold text-blue-650">{i + 1}</span>
                 {FLOW_STEP_LABELS[step] || step}
               </span>
               {i < arr.length - 1 && (
@@ -442,8 +442,8 @@ const StepKonfirmasi = ({ service, user, formData, onSubmit, onBack }) => {
         <div className="flex items-center flex-wrap gap-1.5">
           {(service.flowSteps ?? ['masyarakat', 'kaling', 'kelurahan']).map((step, i, arr) => (
             <Fragment key={step}>
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-50 border border-blue-200 rounded text-[10px] font-bold text-blue-700">
-                <span className="w-4 h-4 bg-blue-600 text-white rounded-full flex items-center justify-center text-[8px] font-extrabold">{i + 1}</span>
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-transparent border border-blue-300 rounded text-[10px] font-bold text-blue-700">
+                <span className="w-4 h-4 border border-blue-300 rounded-full flex items-center justify-center text-[8px] font-extrabold text-blue-650">{i + 1}</span>
                 {FLOW_STEP_LABELS[step] || step}
               </span>
               {i < arr.length - 1 && (
