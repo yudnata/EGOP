@@ -84,7 +84,7 @@ export const MASYARAKAT_NAV_ITEMS = [
 
 export const MASYARAKAT_BOTTOM_ITEMS = [
   {
-    id: "pengaturan",
+    id: "settings",
     label: "Pengaturan",
     icon: (
       <svg
