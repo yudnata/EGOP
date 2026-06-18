@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import AuthSidePanel from "../components/AuthSidePanel";
 
-const LoginPage = ({ onNavigateToRegister, onLoginSuccess }) => {
+const LoginPage = ({ onLoginSuccess }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [identifier, setIdentifier] = useState("");
@@ -86,12 +87,12 @@ const LoginPage = ({ onNavigateToRegister, onLoginSuccess }) => {
                 >
                   Kata Sandi
                 </label>
-                <button
-                  type="button"
+                <Link
+                  to="/dashboard/forgot-password"
                   className="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"
                 >
                   Lupa Password?
-                </button>
+                </Link>
               </div>
               <div className="relative">
                 <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
@@ -239,13 +240,12 @@ const LoginPage = ({ onNavigateToRegister, onLoginSuccess }) => {
           {/* To register */}
           <p className="mt-7 text-center text-sm text-gray-500">
             Belum punya akun?{" "}
-            <button
-              type="button"
-              onClick={onNavigateToRegister}
+            <Link
+              to="/dashboard/register"
               className="font-semibold text-blue-600 hover:text-blue-700 hover:underline transition-colors"
             >
               Daftar sekarang
-            </button>
+            </Link>
           </p>
         </div>
       </div>

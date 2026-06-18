@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AuthSidePanel from "../components/AuthSidePanel";
 
-const RegisterPage = ({ onNavigateToLogin }) => {
+const RegisterPage = () => {
+  const navigate = useNavigate();
   const [agreed, setAgreed] = useState(false);
   const [form, setForm] = useState({
     namaLengkap: "",
@@ -18,7 +21,7 @@ const RegisterPage = ({ onNavigateToLogin }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onNavigateToLogin?.();
+    navigate("/dashboard/login");
   };
 
   const domisiliOptions = [
@@ -272,19 +275,19 @@ const RegisterPage = ({ onNavigateToLogin }) => {
                 className="text-xs text-gray-600 cursor-pointer leading-relaxed"
               >
                 Saya menyetujui{" "}
-                <a
-                  href="#"
+                <Link
+                  to="/dashboard/register/terms"
                   className="text-blue-600 font-medium hover:underline"
                 >
                   Syarat dan Ketentuan
-                </a>{" "}
+                </Link>{" "}
                 serta{" "}
-                <a
-                  href="#"
+                <Link
+                  to="/dashboard/register/privacy"
                   className="text-blue-600 font-medium hover:underline"
                 >
                   Kebijakan Privasi
-                </a>{" "}
+                </Link>{" "}
                 CivicLink dalam pemrosesan data pribadi saya.
               </label>
             </div>
@@ -316,35 +319,34 @@ const RegisterPage = ({ onNavigateToLogin }) => {
           {/* To login */}
           <p className="mt-5 text-center text-sm text-gray-500">
             Sudah punya akun?{" "}
-            <button
-              type="button"
-              onClick={onNavigateToLogin}
+            <Link
+              to="/dashboard/login"
               className="font-semibold text-blue-600 hover:text-blue-700 hover:underline transition-colors"
             >
               Masuk di sini
-            </button>
+            </Link>
           </p>
 
           {/* Footer links */}
           <div className="mt-6 pt-5 border-t border-gray-100 flex justify-center gap-6">
-            <a
-              href="#"
+            <Link
+              to="/dashboard/help"
               className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
             >
               Pusat Bantuan
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="/dashboard/register/guide"
               className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
             >
               Panduan Registrasi
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="/dashboard/contact"
               className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
             >
               Kontak Kami
-            </a>
+            </Link>
           </div>
         </div>
       </div>
